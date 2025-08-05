@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mi Página con JS</title>
+    <style>
+        /* Estilos simples para el menú y el botón */
+        #menu {
+            display: none;
+            background: #eee;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        #menu.active {
+            display: block;
+        }
+        nav button {
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            cursor: pointer;
+        }
+        #mensaje {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <button id="menuBtn">Mostrar/Ocultar menú</button>
+        <div id="menu">
+            <a href="#">Inicio</a> |
+            <a href="#">Servicios</a> |
+            <a href="#">Contacto</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Bienvenido a mi página</h1>
+        <p id="parrafo">Este texto cambiará cuando hagas clic en el botón.</p>
+        <button id="cambiarTexto">Cambiar texto</button>
+
+        <h2>Formulario de contacto</h2>
+        <form id="formulario">
+            <label>Nombre: <input type="text" id="nombre" /></label><br /><br />
+            <label>Email: <input type="email" id="email" /></label><br /><br />
+            <button type="submit">Enviar</button>
+        </form>
+        <p id="mensaje"></p>
+    </main>
+
+    <script>
+        // Al cargar la página
+        window.onload = function() {
+            alert("¡Bienvenido a mi página!");
+        };
+
+        // Mostrar/Ocultar menú
+        const menuBtn = document.getElementById('menuBtn');
+        const menu = document.getElementById('menu');
+        menuBtn.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
+        // Cambiar texto al hacer clic
+        const cambiarTextoBtn = document.getElementById('cambiarTexto');
+        const parrafo = document.getElementById('parrafo');
+        cambiarTextoBtn.addEventListener('click', () => {
+            parrafo.textContent = "¡Has cambiado el texto con JavaScript!";
+        });
+
+        // Validar formulario
+        const formulario = document.getElementById('formulario');
+        const mensaje = document.getElementById('mensaje');
+        formulario.addEventListener('submit', (e) => {
+            e.preventDefault(); // Evita que se recargue la página
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if(nombre === "" || email === "") {
+                mensaje.textContent = "Por favor, completa todos los campos.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            // Validar formato básico del email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailRegex.test(email)) {
+                mensaje.textContent = "Por favor, ingresa un email válido.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            mensaje.textContent = "Formulario enviado con éxito. ¡Gracias!";
+            mensaje.style.color = "green";
+
+            formulario.reset(); // Limpia el formulario
+        });
+    </script>
+
+</body>
+</html>
